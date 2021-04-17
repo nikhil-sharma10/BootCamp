@@ -16,7 +16,9 @@ class Sum implements Callable<Integer> {
 
         for(int i = 0; i<length; i++){
             sum += i;
+
         }
+        Thread.sleep(60000);
 
         return sum;
     }
@@ -27,14 +29,22 @@ public class FutureAndCallable {
     public static void main(String[] args) throws InterruptedException {
 
         ExecutorService executor = Executors.newFixedThreadPool(3);
+        Future<Integer> future=null;
 
-        Future<Integer> future = executor.submit(new Sum(10000));
-        executor.shutdown();
-
-        executor.awaitTermination(1,TimeUnit.MINUTES);
+        for (int i = 0; i < 5; i++) {
+            future = executor.submit(new Sum(10000));
+        }
+//        executor.shutdown();
+//
+//        executor.awaitTermination(1,TimeUnit.MINUTES);
 
         if(future.isCancelled()){
             System.out.println("Task got cancelled...");
+        }
+        try {
+            System.out.println(future.get());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
 
         if(future.isDone()){
