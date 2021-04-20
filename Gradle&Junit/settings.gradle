@@ -1,0 +1,4 @@
+rootProject.name = 'Gradle&Junit'
+include 'Module1'
+include 'Module2'
+

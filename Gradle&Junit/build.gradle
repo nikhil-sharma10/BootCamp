@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+}
+
+allprojects{
+    apply plugin: 'java'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+apply plugin:'java'
+
+
+task fatJar(type:Jar){
+    manifest{
+        attributes 'Implementation-Title' : 'Gradle jar file creation',
+        'Main-Class' : 'Hello_World'
+    }
+
+    baseName = 'Demo' + '-Jar'
+
+    from {configurations.compile.collect{it.directory() ? it : zipTree(it)}}
+    with jar
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
