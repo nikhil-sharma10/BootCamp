@@ -1,9 +1,13 @@
 package com.example.RestFulServicesExercise.employee;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -21,12 +25,17 @@ public class EmployeeResource {
     }
 
     @GetMapping("/employees/{id}")
-    public Employee retrieveEmployee(@PathVariable int id){
+    public EntityModel<Employee> retrieveEmployee(@PathVariable int id){
         Employee user = service.findOne(id);
         if(user == null){
             throw new UserNotFoundException("id-"+ id);
         }
-        return user;
+        //HateOAS implementation
+        EntityModel<Employee> resource = EntityModel.of(user);
+        WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllEmployee());
+        resource.add(linkTo.withRel("all-employees"));
+
+        return resource;
     }
 
     @PostMapping("/employees")

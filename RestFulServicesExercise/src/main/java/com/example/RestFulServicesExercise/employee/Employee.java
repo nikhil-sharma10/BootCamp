@@ -1,12 +1,17 @@
 package com.example.RestFulServicesExercise.employee;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.Size;
 
+@ApiModel(description = "Employee Details")
 public class Employee {
 
     private Integer id;
 
     @Size(min=2)
+    @ApiModelProperty(notes="Name of the employee should be at least of 2 characters")
     private String name;
     private int age;
 
