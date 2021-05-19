@@ -58,7 +58,10 @@ class JpqlAndNativeSqlExerciseApplicationTests {
 
 	@Test
 	public void updateSalaryTest(){
-		repository.updateSalary(0);
+//		repository.updateSalary(0);
+		Object[] objects = repository.avgSalaryEmployee();
+		Integer avgSalary = ((Double)objects[0]).intValue();
+		repository.updateSalary(34000,avgSalary);
 	}
 
 

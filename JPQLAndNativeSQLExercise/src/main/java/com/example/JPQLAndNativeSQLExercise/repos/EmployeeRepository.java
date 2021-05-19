@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
@@ -15,8 +16,9 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
     public List<Object []> findAllEmployee(Sort sort);
 
     @Modifying
-    @Query(value = "update Employee set salary =:increasedSalary where salary < (select avgSalary from (select avg(salary) as avgSalary from Employee) as tempEmp)")
-    public void updateSalary(@Param("increasedSalary") int increasedSalary);
+    @Transactional
+    @Query(value = "update Employee set salary =:increasedSalary where salary<:avgSalary")
+    public void updateSalary(@Param("increasedSalary") int increasedSalary, @Param("avgSalary") Integer avgSalary);
 
     @Query(value = "select empid,empfirstname,empage from employee where emplastname LIKE '%Singh'",nativeQuery = true)
     public List<Object []> nativeQuery();
@@ -24,6 +26,9 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
     @Modifying
     @Query(value = "delete from employee where empage>:age",nativeQuery = true)
     public void deleteEmployee(@Param("age") int age);
+
+    @Query("select avg(salary) from Employee")
+    public Object[] avgSalaryEmployee();
 
 
  }
