@@ -1,11 +1,9 @@
 package com.bootcampProject.BootcampProject.domain;
 
+import com.bootcampProject.BootcampProject.constants.OrdersStatus;
 import com.sun.istack.NotNull;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class OrderStatus extends BaseDomain{
@@ -13,12 +11,14 @@ public class OrderStatus extends BaseDomain{
     @OneToOne
     @JoinColumn(name = "order_product_id")
     private OrderProduct orderProduct;
+    @Enumerated(EnumType.STRING)
     @NotNull
     @Column(nullable = false)
-    private OrderStatus fromStatus;
+    private OrdersStatus fromStatus;
+    @Enumerated(EnumType.STRING)
     @NotNull
     @Column(nullable = false)
-    private OrderStatus toStatus;
+    private OrdersStatus toStatus;
     private String transactionNotesComments;
 
     public OrderProduct getOrderProduct() {
@@ -29,19 +29,19 @@ public class OrderStatus extends BaseDomain{
         this.orderProduct = orderProduct;
     }
 
-    public OrderStatus getFromStatus() {
+    public OrdersStatus getFromStatus() {
         return fromStatus;
     }
 
-    public void setFromStatus(OrderStatus fromStatus) {
+    public void setFromStatus(OrdersStatus fromStatus) {
         this.fromStatus = fromStatus;
     }
 
-    public OrderStatus getToStatus() {
+    public OrdersStatus getToStatus() {
         return toStatus;
     }
 
-    public void setToStatus(OrderStatus toStatus) {
+    public void setToStatus(OrdersStatus toStatus) {
         this.toStatus = toStatus;
     }
 

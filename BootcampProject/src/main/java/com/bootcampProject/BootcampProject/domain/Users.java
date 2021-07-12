@@ -1,14 +1,16 @@
 package com.bootcampProject.BootcampProject.domain;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class User extends BaseDomain{
+public class Users extends BaseDomain{
 
     @NotNull
     @Column(unique = true, nullable = false)
@@ -27,11 +29,14 @@ public class User extends BaseDomain{
     @NotNull
     @Column(nullable = false)
     private boolean isActive;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Address> addresses;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
     private UserRole userRole;
+
+    public Users() {
+    }
 
     public String getEmail() {
         return email;

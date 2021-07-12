@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,5 +25,6 @@ public class MyUserDetailsService implements UserDetailsService {
                 userDetails = user;
         }
         return userDetails;
+//        return new User("Nikhil Sharma","Nikhil@1999",new ArrayList<>());
     }
 }

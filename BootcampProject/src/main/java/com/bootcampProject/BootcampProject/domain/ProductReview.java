@@ -1,9 +1,11 @@
 package com.bootcampProject.BootcampProject.domain;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+@Entity
 public class ProductReview extends BaseDomain{
 
     @OneToOne(cascade = CascadeType.ALL)

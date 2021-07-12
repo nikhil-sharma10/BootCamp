@@ -11,8 +11,15 @@ public class Role extends BaseDomain implements GrantedAuthority {
     @Column(nullable = false)
     private String authority;
 
-//    @OneToOne(mappedBy = "role")
-//    private UserRole userRole;
+    @OneToOne(mappedBy = "role", cascade = CascadeType.ALL)
+    private UserRole userRole;
+
+    public Role() {
+    }
+
+    public Role(String authority) {
+        this.authority = authority;
+    }
 
     @Override
     public String getAuthority() {
@@ -23,11 +30,11 @@ public class Role extends BaseDomain implements GrantedAuthority {
         this.authority = authority;
     }
 
-//    public UserRole getUserRole() {
-//        return userRole;
-//    }
-//
-//    public void setUserRole(UserRole userRole) {
-//        this.userRole = userRole;
-//    }
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
 }

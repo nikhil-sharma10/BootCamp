@@ -1,24 +1,29 @@
 package com.bootcampProject.BootcampProject.domain;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+@Entity
 public class UserRole extends BaseDomain{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_Id")
-    private User user;
+    private Users users;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_Id")
     private Role role;
 
-    public User getUser() {
-        return user;
+    public UserRole() {
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     public Role getRole() {

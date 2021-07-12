@@ -8,7 +8,7 @@ import java.util.Date;
 //Created at, Created By, ModifiedAt, ModifiedBy
 
 @Entity
-public class Order extends BaseDomain{
+public class Orders extends BaseDomain{
 
     @ManyToOne
     @JoinColumn(name = "customer_user_id")
@@ -24,7 +24,7 @@ public class Order extends BaseDomain{
     private String paymentMethod;
     @Embedded
     private CommonAddress address;
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "orders", cascade = CascadeType.ALL)
     private OrderProduct orderProduct;
 
     public Customer getCustomer() {

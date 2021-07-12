@@ -1,7 +1,6 @@
-package com.example.SpringSecurity.util;
+package com.bootcampProject.BootcampProject.util;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +17,7 @@ public class JwtUtil {
     private String SECRET_KEY = "secret";
 
 
-    private String createToken(Map<String,Object> claims,String subject){
+    private String createToken(Map<String,Object> claims, String subject){
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(SignatureAlgorithm.HS256,SECRET_KEY).compact();
@@ -28,6 +27,7 @@ public class JwtUtil {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims,userName);
     }
+
 
     public String extractUserName(String token){
         return extractClaim(token, Claims::getSubject);
@@ -46,7 +46,7 @@ public class JwtUtil {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
-    private Boolean isTokenExpired(String token){
+    public Boolean isTokenExpired(String token){
         return extractExpiration(token).before(new Date());
     }
 
@@ -55,4 +55,8 @@ public class JwtUtil {
         return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
+    public Boolean validateToken(String token, String email){
+        final String userName = extractUserName(token);
+        return (userName.equals(email) && !isTokenExpired(token));
+    }
 }

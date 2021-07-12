@@ -1,5 +1,6 @@
 package com.bootcampProject.BootcampProject.dto;
 
+import java.util.Set;
 import java.util.UUID;
 
 public class UserDTO extends BaseDTO{
@@ -8,17 +9,16 @@ public class UserDTO extends BaseDTO{
     private String middleName;
     private String lastName;
     private String email;
-    private boolean isDeleted;
-    private boolean isActive;
+    private String password;
+    private String confirmPassword;
+    private boolean activated;
 
-    public UserDTO(UUID id, String firstName, String middleName, String lastName, String email, boolean isDeleted, boolean isActive) {
-        this.id = id;
+    public UserDTO(String firstName, String middleName, String lastName, String email, boolean activated) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.email = email;
-        this.isDeleted = isDeleted;
-        this.isActive = isActive;
+        this.activated = activated;
     }
 
     public String getFirstName() {
@@ -53,19 +53,27 @@ public class UserDTO extends BaseDTO{
         this.email = email;
     }
 
-    public boolean isDeleted() {
-        return isDeleted;
+    public String getPassword() {
+        return password;
     }
 
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 }

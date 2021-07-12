@@ -9,7 +9,7 @@ public class OrderProduct extends BaseDomain {
 
     @OneToOne
     @JoinColumn(name = "order_id")
-    private Order order;
+    private Orders orders;
     @NotNull
     @Column(nullable = false)
     private int quantity;
@@ -23,12 +23,12 @@ public class OrderProduct extends BaseDomain {
     @OneToOne(mappedBy = "orderProduct", cascade = CascadeType.ALL)
     private OrderStatus orderStatus;
 
-    public Order getOrder() {
-        return order;
+    public Orders getOrders() {
+        return orders;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrders(Orders orders) {
+        this.orders = orders;
     }
 
     public int getQuantity() {

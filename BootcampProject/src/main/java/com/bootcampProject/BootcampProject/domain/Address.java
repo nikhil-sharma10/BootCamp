@@ -1,7 +1,5 @@
 package com.bootcampProject.BootcampProject.domain;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.*;
 
 @Entity
@@ -12,7 +10,7 @@ public class Address extends BaseDomain {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Users users;
 
 
     public CommonAddress getCommonAddress() {
@@ -23,12 +21,12 @@ public class Address extends BaseDomain {
         this.commonAddress = commonAddress;
     }
 
-    public User getUser() {
-        return user;
+    public Users getUsers() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
 

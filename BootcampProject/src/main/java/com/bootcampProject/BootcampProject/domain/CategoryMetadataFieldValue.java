@@ -1,5 +1,10 @@
 package com.bootcampProject.BootcampProject.domain;
 
+//import com.bootcampProject.BootcampProject.convertor.StringListConverter;
+
+import com.bootcampProject.BootcampProject.convertor.StringListConverter;
+
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -16,6 +21,7 @@ public class CategoryMetadataFieldValue extends BaseDomain{
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Convert(converter = StringListConverter.class)
     private List<String> values;
 
     public CategoryMetadataField getCategoryMetadataField() {
