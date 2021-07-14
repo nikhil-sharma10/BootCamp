@@ -133,7 +133,7 @@ public class AdminService extends BaseService{
             if(seller.isActive()){
                 seller.setActive(false);
                 userRepository.save(seller);
-                sendMail.sendMail("Account De-Activation","Your account has been de-activated",seller.getEmail());
+//                sendMail.sendMail("Account De-Activation","Your account has been de-activated",seller.getEmail());
                 responseBody.setData(null);
                 responseBody.setMessage("Seller Account De-Activated Successfully");
                 return responseBody;

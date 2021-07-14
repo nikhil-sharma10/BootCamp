@@ -57,13 +57,13 @@ public class AuthController {
         ResponseBody<String,String> responseBody = authenticationService.authenticate(logInDTO);
         return new ResponseEntity<>(responseBody,HttpStatus.OK);
     }
-//
-//    @PutMapping(path = "/confirm-account")
-//    public ResponseEntity<?> confirmCustomerAccount(@RequestParam("token") String token){
-//        Users customer = validationService.activateCustomer(token);
-//        return new ResponseEntity<>(new ResponseBody<>(customer,"Customer Activated Successfully"),HttpStatus.OK);
-//    }
-//
+
+    @PutMapping(path = "/confirm-account")
+    public ResponseEntity<?> confirmCustomerAccount(@RequestParam("token") String token){
+        Users customer = validationService.activateCustomer(token);
+        return new ResponseEntity<>(new ResponseBody<>(customer,"Customer Activated Successfully"),HttpStatus.OK);
+    }
+
 //
 //    @PostMapping(path = "/admin")
 //    public ResponseEntity<?> createAdmin(@RequestBody Users users) throws JsonProcessingException {

@@ -35,6 +35,12 @@ public class Users extends BaseDomain{
     @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
     private UserRole userRole;
 
+    @NotNull
+    @Column(nullable = false)
+    private boolean isAccountNonLocked;
+
+    private int failedLoginAttempt;
+
     public Users() {
     }
 
@@ -108,5 +114,21 @@ public class Users extends BaseDomain{
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    public boolean isAccountNonLocked() {
+        return isAccountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        isAccountNonLocked = accountNonLocked;
+    }
+
+    public int getFailedLoginAttempt() {
+        return failedLoginAttempt;
+    }
+
+    public void setFailedLoginAttempt(int failedLoginAttempt) {
+        this.failedLoginAttempt = failedLoginAttempt;
     }
 }

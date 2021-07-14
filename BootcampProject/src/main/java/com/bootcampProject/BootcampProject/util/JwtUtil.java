@@ -1,8 +1,11 @@
 package com.bootcampProject.BootcampProject.util;
 
+import com.bootcampProject.BootcampProject.domain.BlockedToken;
+import com.bootcampProject.BootcampProject.repository.BlockedTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,9 @@ import java.util.function.Function;
 
 @Service
 public class JwtUtil {
+
+    @Autowired
+    private BlockedTokenRepository blockedTokenRepository;
 
     private String SECRET_KEY = "secret";
 
@@ -50,6 +56,11 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
+    public Boolean isBlockedToken(String token){
+        BlockedToken blockedToken = blockedTokenRepository.findByToken(token);
+        return blockedToken != null;
+    }
+
     public Boolean validateToken(String token, UserDetails userDetails){
         final String userName = extractUserName(token);
         return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
@@ -57,6 +68,7 @@ public class JwtUtil {
 
     public Boolean validateToken(String token, String email){
         final String userName = extractUserName(token);
-        return (userName.equals(email) && !isTokenExpired(token));
+
+        return (userName.equals(email) && (!isTokenExpired(token) && !isBlockedToken(token)));
     }
 }

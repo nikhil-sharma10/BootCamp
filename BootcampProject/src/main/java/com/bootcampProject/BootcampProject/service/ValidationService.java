@@ -88,5 +88,8 @@ public class ValidationService extends BaseService{
         else if(!user.isActive()){
             throw new BadRequestException("User is not active");
         }
+        else if(!user.isAccountNonLocked()){
+            throw new BadRequestException("Your account is locked");
+        }
     }
 }

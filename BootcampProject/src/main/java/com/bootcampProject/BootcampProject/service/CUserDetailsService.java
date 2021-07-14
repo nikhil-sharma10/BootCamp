@@ -57,10 +57,15 @@ public class CUserDetailsService extends BaseService implements UserDetailsServi
     public ResponseBody<Customer,String> registerCustomer(CustomerDTO customerDTO){
         Customer customer = customerTransformer.fromDTO(customerDTO);
         String pass = passwordEncoder.encode(customer.getPassword());
+        customer.setPassword(pass);
         Role role = new Role("ROLE_CUSTOMER");
         UserRole userRole = new UserRole();
         userRole.setRole(role);
         userRole.setUsers(customer);
+        customer.setActive(true);
+        customer.setAccountNonLocked(true);
+        customer.setDeleted(false);
+        customer.setFailedLoginAttempt(0);
         userRoleRepository.save(userRole);
         final String jwtToken = jwtUtil.generateToken(customer.getEmail());
         sendMail.sendMail("Account Activation Token","To confirm your account please click here: http://localhost:8081/register/confirm-account?token=" + jwtToken,customer.getEmail());
@@ -83,6 +88,8 @@ public class CUserDetailsService extends BaseService implements UserDetailsServi
             userRole.setUsers(seller);
             seller.setActive(true);
             seller.setDeleted(false);
+            seller.setAccountNonLocked(true);
+            seller.setFailedLoginAttempt(0);
             userRoleRepository.save(userRole);
             responseBody.setData(seller);
             responseBody.setMessage("Seller has been created Successfully");
@@ -113,11 +120,19 @@ public class CUserDetailsService extends BaseService implements UserDetailsServi
     public CUserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Users users = userRepository.findByEmail(email);
 
-        if(users != null && users.isActive()){
-            //set user details
-            List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(users.getUserRole().getRole());
-            return new CUserDetails(users.getEmail(), users.getPassword(),authorities, users.getId());
+        if(users != null){
+            if(users.isActive()) {
+                if (users.isAccountNonLocked()) {
+                    List<GrantedAuthority> authorities = new ArrayList<>();
+                    authorities.add(users.getUserRole().getRole());
+                    return new CUserDetails(users.getEmail(), users.getPassword(), users.isActive(), true, true, users.isAccountNonLocked(), authorities, users.getId());
+                } else {
+                    throw new RuntimeException("User Account is locked...");
+                }
+            }
+            else{
+                throw new RuntimeException("User is not active...");
+            }
         }
         else
         {
