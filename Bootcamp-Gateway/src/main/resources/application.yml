@@ -1,0 +1,10 @@
+server:
+  port: 9092
+spring:
+  cloud:
+    gateway:
+      routes:
+        -id: bootcamp
+        uri: http://localhost:8080/
+        predicates:
+          -path: /bootcamp/v1/**

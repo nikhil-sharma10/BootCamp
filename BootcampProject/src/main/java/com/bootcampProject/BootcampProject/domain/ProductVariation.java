@@ -1,5 +1,8 @@
 package com.bootcampProject.BootcampProject.domain;
 
+import com.bootcampProject.BootcampProject.convertor.JSONObjectConverter;
+import org.json.JSONObject;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,8 +13,9 @@ public class ProductVariation extends BaseDomain {
     private Product product;
     private int quantityAvailable;
     private double price;
-    @Column(columnDefinition = "JSON")
-    private String metadata;
+    @Column(columnDefinition = "TEXT")
+    @Convert(converter = JSONObjectConverter.class)
+    private JSONObject metadata;
     private String primaryImageName;
     private boolean isActive;
     @OneToOne(mappedBy = "productVariation", cascade = CascadeType.ALL)
@@ -42,11 +46,11 @@ public class ProductVariation extends BaseDomain {
         this.price = price;
     }
 
-    public String getMetadata() {
+    public JSONObject getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(String metadata) {
+    public void setMetadata(JSONObject metadata) {
         this.metadata = metadata;
     }
 

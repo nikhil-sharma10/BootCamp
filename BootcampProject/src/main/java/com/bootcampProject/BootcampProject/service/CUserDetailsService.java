@@ -8,6 +8,7 @@ import com.bootcampProject.BootcampProject.domain.*;
 import com.bootcampProject.BootcampProject.dto.CustomerDTO;
 import com.bootcampProject.BootcampProject.dto.SellerDTO;
 import com.bootcampProject.BootcampProject.exceptions.BadRequestException;
+import com.bootcampProject.BootcampProject.repository.AddressRepository;
 import com.bootcampProject.BootcampProject.repository.UserRepository;
 import com.bootcampProject.BootcampProject.repository.UserRoleRepository;
 import com.bootcampProject.BootcampProject.util.JwtUtil;
@@ -54,6 +55,9 @@ public class CUserDetailsService extends BaseService implements UserDetailsServi
     @Autowired
     MessageSource messageSource;
 
+    @Autowired
+    AddressRepository addressRepository;
+
     public ResponseBody<Customer,String> registerCustomer(CustomerDTO customerDTO){
         Customer customer = customerTransformer.fromDTO(customerDTO);
         String pass = passwordEncoder.encode(customer.getPassword());
@@ -62,16 +66,23 @@ public class CUserDetailsService extends BaseService implements UserDetailsServi
         UserRole userRole = new UserRole();
         userRole.setRole(role);
         userRole.setUsers(customer);
-        customer.setActive(true);
         customer.setAccountNonLocked(true);
         customer.setDeleted(false);
         customer.setFailedLoginAttempt(0);
+        Set<Address> addressSet = new HashSet<>();
+        for(Address address : customerDTO.getAddresses()){
+            Address address1 = new Address();
+            address1.setCommonAddress(address.getCommonAddress());
+            address1.setDeleted(false);
+            addressSet.add(address1);
+        }
+        customer.setAddresses(addressSet);
         userRoleRepository.save(userRole);
         final String jwtToken = jwtUtil.generateToken(customer.getEmail());
         sendMail.sendMail("Account Activation Token","To confirm your account please click here: http://localhost:8081/register/confirm-account?token=" + jwtToken,customer.getEmail());
         ResponseBody<Customer,String> responseBody = new ResponseBody<>();
         responseBody.setData(customer);
-        responseBody.setMessage("Customer has been created and Activation Mail has been sent to " + customer.getEmail());
+        responseBody.setMessage("Customer has been created and Activation Mail has been sent to " + customer.getEmail() + " Activation token: " + jwtToken);
         return responseBody;
     }
 
@@ -79,7 +90,6 @@ public class CUserDetailsService extends BaseService implements UserDetailsServi
         Seller seller = sellerTransformer.fromDTO(sellerDTO);
         ResponseBody<Seller,String> responseBody = new ResponseBody<>();
 
-        if(seller.getAddresses().size() == 1){
             String pass = passwordEncoder.encode(seller.getPassword());
             seller.setPassword(pass);
             Role roles = new Role("ROLE_SELLER");
@@ -90,15 +100,17 @@ public class CUserDetailsService extends BaseService implements UserDetailsServi
             seller.setDeleted(false);
             seller.setAccountNonLocked(true);
             seller.setFailedLoginAttempt(0);
+            Set<Address> addressSet = new HashSet<>();
+            Address address = new Address();
+            address.setCommonAddress(sellerDTO.getCompanyAddress().getCommonAddress());
+            address.setDeleted(false);
+            addressSet.add(address);
+            seller.setAddresses(addressSet);
             userRoleRepository.save(userRole);
             responseBody.setData(seller);
             responseBody.setMessage("Seller has been created Successfully");
             return responseBody;
         }
-        else{
-            throw new BadRequestException("Seller can not have multiple address");
-        }
-    }
 
     public Users registerAdmin(Users users){
         String pass = passwordEncoder.encode(users.getPassword());

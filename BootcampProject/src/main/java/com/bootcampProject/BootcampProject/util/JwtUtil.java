@@ -58,12 +58,19 @@ public class JwtUtil {
 
     public Boolean isBlockedToken(String token){
         BlockedToken blockedToken = blockedTokenRepository.findByToken(token);
-        return blockedToken != null;
+        if(blockedToken ==  null)
+            return false;
+        return blockedToken.isBlocked();
+    }
+
+    public boolean isResetToken(String token){
+        BlockedToken blockedToken = blockedTokenRepository.findByToken(token);
+        return blockedToken.isBlocked() && blockedToken.getUser()!= null;
     }
 
     public Boolean validateToken(String token, UserDetails userDetails){
         final String userName = extractUserName(token);
-        return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return (userName.equals(userDetails.getUsername()) && (!isTokenExpired(token) && !isBlockedToken(token)));
     }
 
     public Boolean validateToken(String token, String email){

@@ -1,6 +1,7 @@
 package com.bootcampProject.BootcampProject.service;
 
 import com.bootcampProject.BootcampProject.domain.BlockedToken;
+import com.bootcampProject.BootcampProject.dto.CustomerDTO;
 import com.bootcampProject.BootcampProject.exceptions.BadRequestException;
 import com.bootcampProject.BootcampProject.repository.BlockedTokenRepository;
 import com.bootcampProject.BootcampProject.util.JwtUtil;
@@ -19,7 +20,7 @@ public class LogoutService extends BaseService {
         if(jwtUtil.extractUserName(token) != null){
             if(!jwtUtil.isTokenExpired(token)){
                 if(!jwtUtil.isBlockedToken(token)){
-                    BlockedToken blockedToken = new BlockedToken(token,true);
+                    BlockedToken blockedToken = new BlockedToken(token,true,null);
                     blockedTokenRepository.save(blockedToken);
                 }
                 else {

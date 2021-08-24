@@ -8,9 +8,8 @@ public class Address extends BaseDomain {
     @Embedded
     private CommonAddress commonAddress;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private Users users;
+
+    private boolean isDeleted;
 
 
     public CommonAddress getCommonAddress() {
@@ -21,13 +20,12 @@ public class Address extends BaseDomain {
         this.commonAddress = commonAddress;
     }
 
-    public Users getUsers() {
-        return users;
+
+    public boolean isDeleted() {
+        return isDeleted;
     }
 
-    public void setUsers(Users users) {
-        this.users = users;
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
-
-
 }

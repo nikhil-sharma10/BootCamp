@@ -4,10 +4,7 @@ package com.bootcampProject.BootcampProject.domain;
 
 import com.bootcampProject.BootcampProject.convertor.StringListConverter;
 
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -17,7 +14,7 @@ public class CategoryMetadataFieldValue extends BaseDomain{
     @JoinColumn(name = "category_metadata_field_id")
     private CategoryMetadataField categoryMetadataField;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 

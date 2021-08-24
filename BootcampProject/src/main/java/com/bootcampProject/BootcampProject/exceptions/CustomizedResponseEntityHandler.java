@@ -32,5 +32,11 @@ public class CustomizedResponseEntityHandler extends ResponseEntityExceptionHand
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(FileUploadException.class)
+    public final ResponseEntity<Object> handleFileUploadException(Exception ex, WebRequest webRequest){
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),ex.getMessage(),webRequest.getDescription(false));
+        return new ResponseEntity<>(exceptionResponse,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 
 }

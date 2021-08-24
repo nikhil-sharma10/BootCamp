@@ -15,4 +15,6 @@ public interface SellerRepository extends CrudRepository<Seller, UUID> {
     Seller findByCompanyName(String companyName);
 
     Page<Seller> findAll(Pageable pageable);
+
+    Seller findByEmail(String email);
 }

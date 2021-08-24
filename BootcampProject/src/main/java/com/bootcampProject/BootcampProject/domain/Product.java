@@ -3,6 +3,7 @@ package com.bootcampProject.BootcampProject.domain;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -18,24 +19,37 @@ public class Product extends BaseDomain{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private Category category;
-    @NotNull
-    @Column(nullable = false)
     private boolean isCancellable;
-    @NotNull
-    @Column(nullable = false)
     private boolean isReturnable;
     @NotNull
     @Column(nullable = false)
     private String brand;
-    @NotNull
-    @Column(nullable = false)
     private boolean isActive;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<ProductVariation> productVariationList;
+    @NotNull
+    @Column(nullable = false)
+    private boolean isDeleted;
 
 //    @OneToOne(mappedBy = "product" ,cascade = CascadeType.ALL)
 //    private ProductReview productReview;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        Product product = (Product) o;
+        return getSeller().equals(product.getSeller()) &&
+                getName().equals(product.getName()) &&
+                getCategory().equals(product.getCategory()) &&
+                getBrand().equals(product.getBrand());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getSeller(), getName(), getCategory(), getBrand());
+    }
 
     public Seller getSeller() {
         return seller;
@@ -109,7 +123,15 @@ public class Product extends BaseDomain{
         this.productVariationList = productVariationList;
     }
 
-//    public ProductReview getProductReview() {
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    //    public ProductReview getProductReview() {
 //        return productReview;
 //    }
 //

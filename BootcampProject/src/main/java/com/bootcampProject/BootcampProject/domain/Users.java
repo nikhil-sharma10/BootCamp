@@ -26,10 +26,11 @@ public class Users extends BaseDomain{
     @NotNull
     @Column(nullable = false)
     private boolean isDeleted;
-    @NotNull
-    @Column(nullable = false)
+
     private boolean isActive;
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
     private Set<Address> addresses;
 
     @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)

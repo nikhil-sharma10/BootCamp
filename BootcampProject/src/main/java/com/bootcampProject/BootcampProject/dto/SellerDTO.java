@@ -37,7 +37,7 @@ public class SellerDTO extends BaseDTO {
     private String companyName;
 
     @NotEmpty(message = "Company Address is required")
-    private Set<Address> companyAddress;
+    private Address companyAddress;
     @NotEmpty(message = "Company Contact is required")
     @Pattern(regexp = "\\d{10}", message = "Mobile number is invalid")
     private String companyContact;
@@ -46,10 +46,9 @@ public class SellerDTO extends BaseDTO {
     @NotEmpty(message = "Last Name is required")
     private String lastName;
 
-    public SellerDTO(@NotEmpty(message = "Email is required") @Email(message = "Email is not valid") String email, @NotEmpty(message = "Company Name is required") String companyName, @NotEmpty(message = "Company Address is required") Set<Address> companyAddress, @NotEmpty(message = "Company Contact is required") @Pattern(regexp = "\\d{10}", message = "Mobile number is invalid") String companyContact, @NotEmpty(message = "First Name is required") String firstName, @NotEmpty(message = "Last Name is required") String lastName) {
+    public SellerDTO(@NotEmpty(message = "Email is required") @Email(message = "Email is not valid") String email, @NotEmpty(message = "Company Name is required") String companyName, @NotEmpty(message = "Company Contact is required") @Pattern(regexp = "\\d{10}", message = "Mobile number is invalid") String companyContact, @NotEmpty(message = "First Name is required") String firstName, @NotEmpty(message = "Last Name is required") String lastName) {
         this.email = email;
         this.companyName = companyName;
-        this.companyAddress = companyAddress;
         this.companyContact = companyContact;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -95,11 +94,11 @@ public class SellerDTO extends BaseDTO {
         this.companyName = companyName;
     }
 
-    public Set<Address> getCompanyAddress() {
+    public Address getCompanyAddress() {
         return companyAddress;
     }
 
-    public void setCompanyAddress(Set<Address> companyAddress) {
+    public void setCompanyAddress(Address companyAddress) {
         this.companyAddress = companyAddress;
     }
 

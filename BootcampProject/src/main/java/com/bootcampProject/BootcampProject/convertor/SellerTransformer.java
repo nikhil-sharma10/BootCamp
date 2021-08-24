@@ -9,7 +9,7 @@ public class SellerTransformer implements DTOTransform<Seller, SellerDTO> {
 
     @Override
     public SellerDTO toDTO(Seller domainBase) {
-        return new SellerDTO(domainBase.getEmail(),domainBase.getCompanyName(),domainBase.getAddresses(),domainBase.getCompanyContact(),domainBase.getFirstName(),domainBase.getLastName());
+        return new SellerDTO(domainBase.getEmail(),domainBase.getCompanyName(),domainBase.getCompanyContact(),domainBase.getFirstName(),domainBase.getLastName());
     }
 
     @Override
@@ -23,7 +23,6 @@ public class SellerTransformer implements DTOTransform<Seller, SellerDTO> {
         seller.setCompanyContact(baseDTO.getCompanyContact());
         seller.setCompanyName(baseDTO.getCompanyName());
         seller.setGst(baseDTO.getGst());
-        seller.setAddresses(baseDTO.getCompanyAddress());
         return seller;
     }
 }

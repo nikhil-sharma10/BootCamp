@@ -10,4 +10,6 @@ import java.util.UUID;
 public interface CustomerRepository extends CrudRepository<Customer, UUID> {
 
     Page<Customer> findAll(Pageable pageable);
+
+    Customer findByEmail(String email);
 }

@@ -13,6 +13,7 @@ import com.bootcampProject.BootcampProject.repository.UserRepository;
 import com.bootcampProject.BootcampProject.repository.UserRoleRepository;
 import com.bootcampProject.BootcampProject.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,10 +31,10 @@ public class ValidationService extends BaseService{
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Modifying
     public Users activateCustomer(String token){
         String email = jwtUtil.extractUserName(token);
-        boolean flag = jwtUtil.validateToken(token,email);
-        if(flag){
+        if(jwtUtil.validateToken(token,email)){
             Users customer = userRepository.findByEmail(email);
             customer.setActive(true);
             customer.setDeleted(false);
