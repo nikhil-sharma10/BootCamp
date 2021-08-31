@@ -3,23 +3,26 @@ package com.bootcampProject.BootcampProject.domain;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class OrderProduct extends BaseDomain {
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private Orders orders;
     @NotNull
     @Column(nullable = false)
     private int quantity;
+
     @NotNull
     @Column(nullable = false)
     private double price;
-    @OneToOne
+
+    @OneToMany
     @JoinColumn(name = "product_variation_id")
-    private ProductVariation productVariation;
-    private String productVariationMetadata;
+    private List<ProductVariation> productVariation;
+
     @OneToOne(mappedBy = "orderProduct", cascade = CascadeType.ALL)
     private OrderStatus orderStatus;
 
@@ -47,20 +50,12 @@ public class OrderProduct extends BaseDomain {
         this.price = price;
     }
 
-    public ProductVariation getProductVariation() {
+    public List<ProductVariation> getProductVariation() {
         return productVariation;
     }
 
-    public void setProductVariation(ProductVariation productVariation) {
+    public void setProductVariation(List<ProductVariation> productVariation) {
         this.productVariation = productVariation;
-    }
-
-    public String getProductVariationMetadata() {
-        return productVariationMetadata;
-    }
-
-    public void setProductVariationMetadata(String productVariationMetadata) {
-        this.productVariationMetadata = productVariationMetadata;
     }
 
     public OrderStatus getOrderStatus() {

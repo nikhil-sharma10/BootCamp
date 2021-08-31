@@ -1,22 +1,22 @@
 package com.bootcampProject.BootcampProject.controller;
 
 import com.bootcampProject.BootcampProject.common.ResponseBody;
+import com.bootcampProject.BootcampProject.constants.OrdersStatus;
 import com.bootcampProject.BootcampProject.domain.CategoryMetadataField;
 import com.bootcampProject.BootcampProject.domain.Customer;
 import com.bootcampProject.BootcampProject.domain.Seller;
 import com.bootcampProject.BootcampProject.domain.Users;
-import com.bootcampProject.BootcampProject.dto.CategoryDTO;
-import com.bootcampProject.BootcampProject.dto.CategoryMetaDataFieldDTO;
-import com.bootcampProject.BootcampProject.dto.CategoryMetadataFieldValueDTO;
-import com.bootcampProject.BootcampProject.dto.CustomerDTO;
+import com.bootcampProject.BootcampProject.dto.*;
 import com.bootcampProject.BootcampProject.repository.UserRepository;
 import com.bootcampProject.BootcampProject.service.AdminService;
+import com.bootcampProject.BootcampProject.service.OrderService;
 import com.bootcampProject.BootcampProject.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +29,9 @@ public class AdminAPI {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private OrderService orderService;
 
 
     @GetMapping(path = "/get-customer")
@@ -132,6 +135,33 @@ public class AdminAPI {
         boolean activate = false;
         String responseMessage = productService.activateDeactivateProduct(productId,activate);
         return new ResponseEntity<>(new ResponseBody<>(null,responseMessage),HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/product/{productId}")
+    public ResponseEntity<?> getProduct(HttpServletRequest httpServletRequest, @PathVariable("productId") UUID productId){
+        ProductViewDTO responseData = productService.getProduct(productId,httpServletRequest);
+        String responseMessage = "Product details fetched Successfully!!!";
+        return new ResponseEntity<>(new ResponseBody<>(responseData,responseMessage), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/getAllProduct")
+    public ResponseEntity<?> getAllProduct(@RequestParam(name = "page", defaultValue = "0") Integer page, @RequestParam(name = "size", defaultValue = "10") Integer size, @RequestParam(name = "sortBy", defaultValue = "id") String sortBy, @RequestParam(name = "order",defaultValue = "ASC") String order, @RequestParam(name = "query") String query, @RequestParam("id") UUID id){
+        List<ProductViewDTO> responseData = productService.getAllProductByQuery(page,size,sortBy,order,query,id);
+        String responseMessage = "Product List fetched Successfully!!";
+        return new ResponseEntity<>(new ResponseBody<>(responseData,responseMessage),HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/getAllOrders")
+    public ResponseEntity<?> getAllOrders(HttpServletRequest httpServletRequest, @RequestParam(name = "page", defaultValue = "0") Integer page, @RequestParam(name = "size", defaultValue = "10") Integer size, @RequestParam(name = "sortBy", defaultValue = "id") String sortBy, @RequestParam(name = "order", defaultValue = "ASC") String order){
+        List<OrderProductDTO> responseData  = orderService.viewAllOrdersForAdminSeller(httpServletRequest,page,size,sortBy,order,true);
+        String responseMessage = "All orders fethced Successfully!!!";
+        return new ResponseEntity<>(new ResponseBody<>(responseData,responseMessage), HttpStatus.OK);
+    }
+
+    @PatchMapping(path = "/changeStatus/{orderProductId}")
+    public ResponseEntity<?> changeStatus(HttpServletRequest httpServletRequest, @PathVariable("orderProductId") UUID orderProductId, @RequestParam("fromStatus") OrdersStatus fromStatus, @RequestParam("toStatus") OrdersStatus toStatus){
+        String responseMessage = orderService.changeOrderStatus(httpServletRequest,orderProductId,fromStatus,toStatus,true);
+        return new ResponseEntity<>(new ResponseBody<>(null,responseMessage), HttpStatus.OK);
     }
 
 

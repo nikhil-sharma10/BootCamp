@@ -4,7 +4,9 @@ import com.bootcampProject.BootcampProject.common.DTOTransform;
 import com.bootcampProject.BootcampProject.domain.Product;
 import com.bootcampProject.BootcampProject.dto.ProductViewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductViewDTOConverter implements DTOTransform<Product, ProductViewDTO> {
 
     @Autowired

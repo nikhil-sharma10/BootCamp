@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,8 +21,8 @@ public class Category extends BaseDomain {
     @OneToMany(mappedBy = "parentCategory")
     private Set<Category> childCategories = new HashSet<>();
 
-    @OneToOne(mappedBy = "category", cascade = CascadeType.ALL)
-    private Product product;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Product> products;
 
     public String getName() {
         return name;
@@ -47,11 +48,11 @@ public class Category extends BaseDomain {
         this.childCategories = childCategories;
     }
 
-    public Product getProduct() {
-        return product;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

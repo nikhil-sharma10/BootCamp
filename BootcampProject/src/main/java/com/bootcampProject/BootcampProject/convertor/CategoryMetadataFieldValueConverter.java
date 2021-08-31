@@ -8,7 +8,9 @@ import com.bootcampProject.BootcampProject.dto.CategoryMetadataFieldValueDTO;
 import com.bootcampProject.BootcampProject.repository.CategoryMetadataFieldRepository;
 import com.bootcampProject.BootcampProject.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CategoryMetadataFieldValueConverter implements DTOTransform<CategoryMetadataFieldValue, CategoryMetadataFieldValueDTO> {
 
     @Autowired

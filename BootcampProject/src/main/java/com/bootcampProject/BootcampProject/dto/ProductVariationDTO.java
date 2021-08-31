@@ -2,23 +2,24 @@ package com.bootcampProject.BootcampProject.dto;
 
 import org.json.JSONObject;
 
+import java.net.URI;
 import java.util.UUID;
 
 public class ProductVariationDTO extends BaseDTO {
 
    private UUID productId;
-   private JSONObject metaData;
-   private String primaryImageName;
-   private int quantityAvailable;
-   private double price;
+   private String metaData;
+   private URI primaryImageName;
+   private Integer quantityAvailable;
+   private Double price;
 
     public ProductVariationDTO() {
     }
 
-    public ProductVariationDTO(UUID productId, JSONObject metaData, String primaryImageName, int quantityAvailable, double price) {
+    public ProductVariationDTO(UUID id, UUID productId, String metaData, Integer quantityAvailable, Double price) {
+        this.id = id;
         this.productId = productId;
         this.metaData = metaData;
-        this.primaryImageName = primaryImageName;
         this.quantityAvailable = quantityAvailable;
         this.price = price;
     }
@@ -31,35 +32,35 @@ public class ProductVariationDTO extends BaseDTO {
         this.productId = productId;
     }
 
-    public JSONObject getMetaData() {
+    public String getMetaData() {
         return metaData;
     }
 
-    public void setMetaData(JSONObject metaData) {
+    public void setMetaData(String metaData) {
         this.metaData = metaData;
     }
 
-    public String getPrimaryImageName() {
-        return primaryImageName;
-    }
-
-    public void setPrimaryImageName(String primaryImageName) {
-        this.primaryImageName = primaryImageName;
-    }
-
-    public int getQuantityAvailable() {
+    public Integer getQuantityAvailable() {
         return quantityAvailable;
     }
 
-    public void setQuantityAvailable(int quantityAvailable) {
+    public void setQuantityAvailable(Integer quantityAvailable) {
         this.quantityAvailable = quantityAvailable;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public URI getPrimaryImageName() {
+        return primaryImageName;
+    }
+
+    public void setPrimaryImageName(URI primaryImageName) {
+        this.primaryImageName = primaryImageName;
     }
 }

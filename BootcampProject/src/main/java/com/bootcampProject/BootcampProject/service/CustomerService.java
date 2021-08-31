@@ -166,7 +166,7 @@ public class CustomerService extends BaseService{
             if(profile.getLastName() != null)
                 seller.setLastName(profile.getLastName());
             if(file != null){
-                imageService.storeFile(file,seller);
+                imageService.storeFile(file,seller,true,null);
             }
             responseMessage = "Profile Updated Successfully";
         }

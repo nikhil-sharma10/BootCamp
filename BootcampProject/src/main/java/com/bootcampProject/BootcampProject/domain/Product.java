@@ -16,7 +16,7 @@ public class Product extends BaseDomain{
     @Column(nullable = false)
     private String name;
     private String description;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private Category category;
     private boolean isCancellable;

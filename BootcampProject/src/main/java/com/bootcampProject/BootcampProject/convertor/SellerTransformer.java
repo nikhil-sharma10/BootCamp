@@ -3,6 +3,8 @@ package com.bootcampProject.BootcampProject.convertor;
 import com.bootcampProject.BootcampProject.common.DTOTransform;
 import com.bootcampProject.BootcampProject.domain.Seller;
 import com.bootcampProject.BootcampProject.dto.SellerDTO;
+import org.springframework.stereotype.Component;
+
 
 public class SellerTransformer implements DTOTransform<Seller, SellerDTO> {
 

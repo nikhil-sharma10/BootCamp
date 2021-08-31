@@ -3,6 +3,7 @@ package com.bootcampProject.BootcampProject.convertor;
 import com.bootcampProject.BootcampProject.common.DTOTransform;
 import com.bootcampProject.BootcampProject.domain.Users;
 import com.bootcampProject.BootcampProject.dto.UserDTO;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;

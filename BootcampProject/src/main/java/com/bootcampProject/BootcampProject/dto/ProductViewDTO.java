@@ -2,6 +2,8 @@ package com.bootcampProject.BootcampProject.dto;
 
 import com.bootcampProject.BootcampProject.domain.Category;
 
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class ProductViewDTO extends BaseDTO {
@@ -12,6 +14,7 @@ public class ProductViewDTO extends BaseDTO {
     private CategoryDTO category;
     private boolean isReturnable;
     private boolean isActive;
+    private Set<ProductVariationDTO> productVariations;
 
     public ProductViewDTO() {
     }
@@ -72,5 +75,13 @@ public class ProductViewDTO extends BaseDTO {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public Set<ProductVariationDTO> getProductVariations() {
+        return productVariations;
+    }
+
+    public void setProductVariations(Set<ProductVariationDTO> productVariations) {
+        this.productVariations = productVariations;
     }
 }

@@ -11,7 +11,7 @@ public class ProductDTO extends BaseDTO {
     private boolean isCancellable;
     private boolean isReturnable;
 
-    public ProductDTO(String productName, String brand, UUID categoryId, String description, boolean isCancellable, boolean isReturnable) {
+    public ProductDTO(String productName, String brand, UUID categoryId, String description, Boolean isCancellable, Boolean isReturnable) {
         this.productName = productName;
         this.brand = brand;
         this.categoryId = categoryId;
@@ -55,19 +55,19 @@ public class ProductDTO extends BaseDTO {
         this.description = description;
     }
 
-    public boolean isCancellable() {
+    public Boolean isCancellable() {
         return isCancellable;
     }
 
-    public void setCancellable(boolean cancellable) {
+    public void setCancellable(Boolean cancellable) {
         isCancellable = cancellable;
     }
 
-    public boolean isReturnable() {
+    public Boolean isReturnable() {
         return isReturnable;
     }
 
-    public void setReturnable(boolean returnable) {
+    public void setReturnable(Boolean returnable) {
         isReturnable = returnable;
     }
 }

@@ -106,7 +106,7 @@ public class AdminService extends BaseService{
 
         CategoryMetadataField categoryMetadataField = categoryMetadataFieldRepository.findByName(metadataField);
         String responseMessage = "";
-        if(categoryMetadataField != null){
+        if(categoryMetadataField == null){
             CategoryMetadataField categoryMetadataField1 = new CategoryMetadataField();
             categoryMetadataField1.setName(metadataField);
             categoryMetadataFieldRepository.save(categoryMetadataField1);
@@ -138,7 +138,7 @@ public class AdminService extends BaseService{
             Category createdCategory = categoryCoverter.fromDTO(categoryDTO);
             Category parentCategory = (categoryDTO.getParentCategory() != null)? categoryRepository.findById(categoryDTO.getParentCategory().getId()).get() : null;
 
-            if(parentCategory == null || (parentCategory.getProduct() == null || !parentCategory.getProduct().isActive())){
+            if(parentCategory == null || (parentCategory.getProducts().size() <= 0)){
                 categoryRepository.save(createdCategory);
                 return responseMessage;
             }

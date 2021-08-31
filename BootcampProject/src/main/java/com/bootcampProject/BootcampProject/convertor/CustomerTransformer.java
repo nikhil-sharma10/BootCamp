@@ -6,6 +6,7 @@ import com.bootcampProject.BootcampProject.domain.Customer;
 import com.bootcampProject.BootcampProject.dto.CustomerDTO;
 import com.bootcampProject.BootcampProject.dto.UserDTO;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.List;

@@ -6,7 +6,9 @@ import com.bootcampProject.BootcampProject.domain.Product;
 import com.bootcampProject.BootcampProject.dto.ProductDTO;
 import com.bootcampProject.BootcampProject.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductConverter implements DTOTransform<Product, ProductDTO> {
 
     @Autowired
